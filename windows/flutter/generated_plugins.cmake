@@ -3,7 +3,10 @@
 #
 
 list(APPEND FLUTTER_PLUGIN_LIST
+<<<<<<< HEAD
   file_selector_windows
+=======
+>>>>>>> a3a76cfbed9d91a24ea954904fec93f1ef2f7d4a
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST

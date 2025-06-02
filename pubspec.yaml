@@ -30,12 +30,15 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+<<<<<<< HEAD
   intl: ^0.18.0 
   intl_phone_field: ^3.2.0
   
   
   image_picker: ^0.8.7+3  # Version stable actuelle (vérifiez sur pub.dev) # Version majeure actuelle
  
+=======
+>>>>>>> a3a76cfbed9d91a24ea954904fec93f1ef2f7d4a
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -57,6 +60,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+<<<<<<< HEAD
   uses-material-design: true
 
   assets:
@@ -67,6 +71,18 @@ flutter:
    
 
 
+=======
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+>>>>>>> a3a76cfbed9d91a24ea954904fec93f1ef2f7d4a
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
