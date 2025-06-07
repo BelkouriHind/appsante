@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
 class MedicalFormPage extends StatefulWidget {
-   const MedicalFormPage({Key? key}) : super(key: key);
+  const MedicalFormPage({Key? key}) : super(key: key);
   @override
-
   _MedicalFormPageState createState() => _MedicalFormPageState();
 }
 
@@ -33,17 +32,21 @@ class _MedicalFormPageState extends State<MedicalFormPage> {
   final List<String> _diets = ['Omnivore', 'Végétarien', 'Végétalien', 'Sans gluten', 'Autre'];
   final List<String> _habits = ['Jamais', 'Occasionnel', 'Régulier', 'Ancien'];
 
+  final TextEditingController _newAllergyController = TextEditingController();
+  final TextEditingController _newMedicationController = TextEditingController();
+
+  @override
+  void dispose() {
+    _newAllergyController.dispose();
+    _newMedicationController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text('Dossier Médical', 
-               style: TextStyle(color: Colors.black87, fontWeight: FontWeight.bold)),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.blue),
-      ),
+     
       body: SingleChildScrollView(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -86,24 +89,33 @@ class _MedicalFormPageState extends State<MedicalFormPage> {
             SizedBox(height: 30),
             _buildSectionTitle('Allergies'),
             
-            // Liste des allergies communes
-            _buildItemSelectionList(
-              label: 'Sélectionnez vos allergies',
-              items: _commonAllergies,
-              selectedItems: _selectedAllergies,
-              onAdd: (item) => setState(() => _selectedAllergies.add(item)),
+            // Liste des allergies communes sous forme de Dropdown
+            _buildDropdownFormField(
+              label: 'Ajouter une allergie commune',
+              value: null, // Pas de valeur sélectionnée par défaut pour ajouter à une liste
+              items: _commonAllergies.where((allergy) => !_selectedAllergies.contains(allergy)).toList(),
+              onChanged: (value) {
+                if (value != null && !_selectedAllergies.contains(value)) {
+                  setState(() {
+                    _selectedAllergies.add(value);
+                  });
+                }
+              },
             ),
+            
             // Champ pour ajouter une allergie personnalisée
             _buildCustomItemField(
               label: 'Ajouter une allergie personnalisée',
               hintText: 'Entrez une nouvelle allergie',
-              value: _newAllergy,
-              onChanged: (value) => _newAllergy = value,
+              controller: _newAllergyController, // Utilisez le contrôleur ici
               onAdd: () {
-                if (_newAllergy != null && _newAllergy!.isNotEmpty) {
+                final newAllergy = _newAllergyController.text.trim();
+                if (newAllergy.isNotEmpty) {
                   setState(() {
-                    _selectedAllergies.add(_newAllergy!);
-                    _newAllergy = null;
+                    if (!_selectedAllergies.contains(newAllergy)) {
+                      _selectedAllergies.add(newAllergy);
+                    }
+                    _newAllergyController.clear(); // Effacer le champ après ajout
                   });
                 }
               },
@@ -117,31 +129,38 @@ class _MedicalFormPageState extends State<MedicalFormPage> {
                 items: _selectedAllergies,
                 onRemove: (item) => setState(() => _selectedAllergies.remove(item)),
               ),
-            
             ],
             
             SizedBox(height: 30),
             _buildSectionTitle('Médicaments'),
             
-            // Liste des médicaments communs
-            _buildItemSelectionList(
-              label: 'Sélectionnez vos médicaments',
-              items: _commonMedications,
-              selectedItems: _selectedMedications,
-              onAdd: (item) => setState(() => _selectedMedications.add(item)),
+            // Liste des médicaments communs sous forme de Dropdown
+            _buildDropdownFormField(
+              label: 'Ajouter un médicament commun',
+              value: null, // Pas de valeur sélectionnée par défaut pour ajouter à une liste
+              items: _commonMedications.where((med) => !_selectedMedications.contains(med)).toList(),
+              onChanged: (value) {
+                if (value != null && !_selectedMedications.contains(value)) {
+                  setState(() {
+                    _selectedMedications.add(value);
+                  });
+                }
+              },
             ),
             
             // Champ pour ajouter un médicament personnalisé
             _buildCustomItemField(
               label: 'Ajouter un médicament personnalisé',
               hintText: 'Entrez un nouveau médicament',
-              value: _newMedication,
-              onChanged: (value) => _newMedication = value,
+              controller: _newMedicationController, // Utilisez le contrôleur ici
               onAdd: () {
-                if (_newMedication != null && _newMedication!.isNotEmpty) {
+                final newMedication = _newMedicationController.text.trim();
+                if (newMedication.isNotEmpty) {
                   setState(() {
-                    _selectedMedications.add(_newMedication!);
-                    _newMedication = null;
+                    if (!_selectedMedications.contains(newMedication)) {
+                      _selectedMedications.add(newMedication);
+                    }
+                    _newMedicationController.clear(); // Effacer le champ après ajout
                   });
                 }
               },
@@ -231,49 +250,10 @@ class _MedicalFormPageState extends State<MedicalFormPage> {
     );
   }
 
-  Widget _buildItemSelectionList({
-    required String label,
-    required List<String> items,
-    required List<String> selectedItems,
-    required Function(String) onAdd,
-  }) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(label, style: TextStyle(fontWeight: FontWeight.w500)),
-        SizedBox(height: 8),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: items.map((item) {
-            final isSelected = selectedItems.contains(item);
-            return FilterChip(
-              label: Text(item),
-              selected: isSelected,
-              onSelected: (selected) {
-                if (selected) {
-                  onAdd(item);
-                } else {
-                  setState(() => selectedItems.remove(item));
-                }
-              },
-              selectedColor: Colors.blue[100],
-              checkmarkColor: Colors.blue,
-              labelStyle: TextStyle(
-                color: isSelected ? Colors.blue : Colors.black87,
-              ),
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-
   Widget _buildCustomItemField({
     required String label,
     required String hintText,
-    required String? value,
-    required Function(String) onChanged,
+    required TextEditingController controller, // Utilisez TextEditingController
     required Function() onAdd,
   }) {
     return Column(
@@ -286,15 +266,12 @@ class _MedicalFormPageState extends State<MedicalFormPage> {
           children: [
             Expanded(
               child: TextField(
+                controller: controller, // Assurez-vous que le contrôleur est attribué
                 decoration: InputDecoration(
                   hintText: hintText,
                   border: OutlineInputBorder(),
                   contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
                 ),
-                onChanged: onChanged,
-                controller: value != null 
-                    ? TextEditingController(text: value)
-                    : null,
               ),
             ),
             SizedBox(width: 8),

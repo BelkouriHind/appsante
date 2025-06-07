@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'homePatient.dart';
-
 import 'DossierMedical.dart';
 import 'Rendez-vous.dart';
-import 'notifications_page.dart';
-import 'profil_page.dart';
+import 'settingspatient.dart'; // Assurez-vous que DemandeRendezVousPage est bien là
 
 class DashboardPatientPage extends StatefulWidget {
   const DashboardPatientPage({super.key});
@@ -17,19 +15,17 @@ class _DashboardPatientPageState extends State<DashboardPatientPage> {
   int _selectedIndex = 0;
 
   final List<Widget> _pages = [
-    Homepatient(),
-    const MedicalFormPage(),
-    DemandeRendezVousPage(),
-    NotificationsPage(),
-    ProfilPage(),
+    Homepatient(),                       // Accueil
+    const MedicalFormPage(),            // Dossier médical
+    const DemandeRendezVousPage(),      // Rendez-vous
+    const parametrePage(),              // Paramètres
   ];
 
-  final List<Map<String, dynamic>> _menuItems = [
+  final List<Map<String, dynamic>> _bottomNavBarItems = [
     {'label': 'Accueil', 'icon': Icons.home},
-    {'label': 'Dossier medical', 'icon': Icons.medical_services},
-    {'label': 'Mes RendezVous', 'icon': Icons.calendar_today},
-    {'label': 'Notifications', 'icon': Icons.notifications},
-    {'label': 'Profil', 'icon': Icons.person},
+    {'label': 'Dossier', 'icon': Icons.medical_services},
+    {'label': 'Rendez-vous', 'icon': Icons.calendar_today},
+    {'label': 'Paramètres', 'icon': Icons.settings},
   ];
 
   void _onItemTapped(int index) {
@@ -38,82 +34,41 @@ class _DashboardPatientPageState extends State<DashboardPatientPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          Container(
-            height: 80,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.3),
-                  blurRadius: 5,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.blue[50],
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Icon(
-                    _menuItems[_selectedIndex]['icon'],
-                    size: 30,
-                    color: const Color.fromARGB(255, 58, 201, 158),
-                  ),
-                ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: _menuItems.asMap().entries.map((entry) {
-                        final index = entry.key;
-                        final item = entry.value;
-                        final isSelected = _selectedIndex == index;
+    if (_pages.length != _bottomNavBarItems.length) {
+      throw 'Erreur: Les listes _pages et _bottomNavBarItems doivent avoir la même longueur.';
+    }
 
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              foregroundColor: isSelected 
-                                ? const Color.fromARGB(255, 58, 201, 158) 
-                                : const Color.fromARGB(255, 10, 10, 10),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            onPressed: () => _onItemTapped(index),
-                            child: Text(
-                              item['label'],
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: isSelected 
-                                  ? FontWeight.bold 
-                                  : FontWeight.normal,
-                              ),
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    return Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text(
+          _bottomNavBarItems[_selectedIndex]['label'] ?? 'Tableau de Bord',
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
           ),
-          Expanded(
-            child: _pages[_selectedIndex],
-          ),
-        ],
+        ),
+        backgroundColor: Colors.white,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Colors.blue),
+      ),
+      body: _pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        items: _bottomNavBarItems.map((item) {
+          return BottomNavigationBarItem(
+            icon: Icon(item['icon']),
+            label: item['label'],
+          );
+        }).toList(),
+        currentIndex: _selectedIndex,
+        selectedItemColor: const Color.fromARGB(255, 58, 201, 158),
+        unselectedItemColor: Colors.grey,
+        onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Colors.white,
+        selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 12),
+        unselectedLabelStyle: TextStyle(fontSize: 11),
       ),
     );
   }

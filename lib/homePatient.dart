@@ -25,15 +25,20 @@ class _HomepatientState extends State<Homepatient> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      // L'AppBar est supprimée ici pour éliminer la flèche de retour.
+      // Si cette page est affichée après une connexion, il est recommandé
+      // d'utiliser Navigator.pushReplacement ou Navigator.pushAndRemoveUntil
+      // pour empêcher l'utilisateur de revenir à la page de connexion
+      // avec le bouton retour du système.
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(24),
+        padding: EdgeInsets.all(16), // Padding général réduit pour mobile
         child: Column(
           children: [
             // Section profil centrée
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: 30),
+                SizedBox(height: 20), // Espace en haut
                 // Photo de profil
                 GestureDetector(
                   onTap: _getImageFromGallery,
@@ -42,56 +47,56 @@ class _HomepatientState extends State<Homepatient> {
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: Color(0xFF4285F4),
-                        width: 2,
+                        width: 1.5,
                       ),
                     ),
                     child: CircleAvatar(
-                      radius: 50,
+                      radius: 40, // Rayon de la photo de profil réduit
                       backgroundColor: Color(0xFFF5F5F5),
-                      backgroundImage: _profileImage != null 
-                          ? FileImage(_profileImage!) 
+                      backgroundImage: _profileImage != null
+                          ? FileImage(_profileImage!)
                           : null,
                       child: _profileImage == null
-                          ? Icon(Icons.camera_alt, 
-                              size: 40, 
+                          ? Icon(Icons.camera_alt,
+                              size: 18, // Taille de l'icône réduite
                               color: Color(0xFF4285F4))
                           : null,
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 12), // Espace réduit
                 // Nom et email
                 Text(
                   'Belkouri Hind',
                   style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 20, // Taille du nom réduite
                     fontWeight: FontWeight.bold,
                     color: Colors.black87,
                   ),
                 ),
-                SizedBox(height: 8),
+                SizedBox(height: 4), // Espace réduit
                 Text(
                   'hindbekouri33@gmail.com',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 14, // Taille de l'email réduite
                     color: Colors.grey[600],
                   ),
                 ),
               ],
             ),
 
-            SizedBox(height: 40),
+            SizedBox(height: 25), // Espace avant la grille
 
-            // Grille d'informations moderne
+            // Grille d'informations moderne (tailles réduites pour mobile)
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.symmetric(horizontal: 8), // Padding horizontal de la grille réduit
               child: GridView.count(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
-                childAspectRatio: 1.5,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+                childAspectRatio: 1.2, // Rend les cartes plus larges et moins hautes (plus petites)
+                crossAxisSpacing: 8, // Espacement réduit
+                mainAxisSpacing: 8, // Espacement réduit
                 children: [
                   _buildModernInfoCard('Âge', '25 ans', Icons.calendar_today),
                   _buildModernInfoCard('Genre', 'Féminin', Icons.person),
@@ -101,24 +106,24 @@ class _HomepatientState extends State<Homepatient> {
               ),
             ),
 
-            SizedBox(height: 40),
+            SizedBox(height: 25), // Espace après la grille
 
             // Section supplémentaire (optionnelle)
             /*
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.symmetric(horizontal: 16), // Padding réduit
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Dernières activités',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16, // Taille réduite
                       fontWeight: FontWeight.bold,
                       color: Colors.black87,
                     ),
                   ),
-                  SizedBox(height: 16),
+                  SizedBox(height: 10), // Espace réduit
                   // Ajouter vos widgets d'activités ici
                 ],
               ),
@@ -134,39 +139,41 @@ class _HomepatientState extends State<Homepatient> {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8), // Rayon des coins réduit
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
-            spreadRadius: 2,
-            blurRadius: 8,
-            offset: Offset(0, 2),
+            color: Colors.grey.withOpacity(0.06), // Opacité de l'ombre très légère
+            spreadRadius: 0.5, // Rayon de propagation réduit
+            blurRadius: 4, // Flou réduit
+            offset: Offset(0, 1), // Décalage réduit
           ),
         ],
       ),
       child: Padding(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(10), // Padding interne de la carte réduit
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
-              size: 28,
+              size: 22, // Taille de l'icône réduite
               color: Color(0xFF4285F4),
             ),
-            SizedBox(height: 12),
+            SizedBox(height: 6), // Espace réduit
             Text(
               title,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 14,
+                fontSize: 12, // Taille du titre réduite
                 color: Colors.grey[600],
               ),
             ),
-            SizedBox(height: 4),
+            SizedBox(height: 2), // Espace très réduit
             Text(
               value,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 15, // Taille de la valeur réduite
                 fontWeight: FontWeight.bold,
                 color: Colors.black87,
               ),

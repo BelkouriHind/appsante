@@ -5,13 +5,10 @@
 import FlutterMacOS
 import Foundation
 
-<<<<<<< HEAD
 import file_selector_macos
+import shared_preferences_foundation
 
 func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
   FileSelectorPlugin.register(with: registry.registrar(forPlugin: "FileSelectorPlugin"))
-=======
-
-func RegisterGeneratedPlugins(registry: FlutterPluginRegistry) {
->>>>>>> a3a76cfbed9d91a24ea954904fec93f1ef2f7d4a
+  SharedPreferencesPlugin.register(with: registry.registrar(forPlugin: "SharedPreferencesPlugin"))
 }
