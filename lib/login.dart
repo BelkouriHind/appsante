@@ -14,6 +14,8 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
 
   String _selectedRole = 'patient';
+  bool _obscureText = true;
+  String? _passwordError;
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
@@ -21,10 +23,14 @@ class _LoginPageState extends State<LoginPage> {
     final login = _loginController.text.trim();
     final password = _passwordController.text.trim();
 
-    if (login.isEmpty || password.isEmpty) {
+    setState(() {
+      _passwordError = password.length < 8 ? 'Mot de passe trop court (min 8 caractères)' : null;
+    });
+
+    if (login.isEmpty || password.isEmpty || _passwordError != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Veuillez remplir tous les champs.'),
+          content: Text('Veuillez remplir tous les champs correctement.'),
           backgroundColor: Colors.redAccent,
         ),
       );
@@ -69,14 +75,16 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Text(
-                'Espace de Connexion ',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: const BoxDecoration(
                   color: Colors.teal,
+                  shape: BoxShape.circle,
                 ),
+                child: const Icon(Icons.local_hospital, size: 64, color: Colors.white),
               ),
+              const SizedBox(height: 20),
+              
               const SizedBox(height: 50),
 
               // Champ Login
@@ -90,13 +98,30 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(height: 20),
 
-              // Champ Mot de passe
+              // Champ Mot de passe avec affichage/masquage
               TextField(
                 controller: _passwordController,
-                obscureText: true,
+                obscureText: _obscureText,
+                onChanged: (value) {
+                  setState(() {
+                    _passwordError = value.length < 8 ? 'Mot de passe trop court (min 8 caractères)' : null;
+                  });
+                },
                 decoration: inputDecoration.copyWith(
                   labelText: 'Mot de passe',
                   prefixIcon: const Icon(Icons.lock, color: Colors.teal),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      _obscureText ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.teal,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                  ),
+                  errorText: _passwordError,
                 ),
               ),
               const SizedBox(height: 20),
@@ -118,17 +143,19 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
               ),
-
               const SizedBox(height: 30),
 
               // Bouton Se connecter
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
-                  icon: const Icon(Icons.login),
+                 icon: const Icon(
+      Icons.login,
+      color: Colors.white, // corrigé ici
+    ),
                   label: const Text(
                     'Se connecter',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white,),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.teal,

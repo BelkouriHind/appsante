@@ -57,6 +57,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/accueil.png
+    - assets/Accueil.png
     - assets/formlogo.png
     - assets/formlogoPatient.png
+    - assets/logosante.png

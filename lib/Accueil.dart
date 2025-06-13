@@ -7,19 +7,24 @@ class AccueilPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+  final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Stack(
         children: [
           // Image de fond
-          SizedBox.expand(
-            child: Image.asset(
-              'assets/accueil.png',
-              fit: BoxFit.cover,
-            ),
-          ),
+         Container(
+  height: screenHeight , // ou 600 si tu veux tester fixe
+   width: screenWidth,
+  child: Image.asset(
+    'assets/Accueil.png',
+    fit: BoxFit.cover,
+    
+  ),
+),
 
           // Filtre doux (gris clair neutre)
-         
+          
 
           // Contenu principal
           SafeArea(
@@ -28,13 +33,19 @@ class AccueilPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(height: 300),
+                  const SizedBox(height: 100),
+                   Image.asset(
+          'assets/logosante.png',
+          height: 80, // tu peux ajuster la taille
+          fit: BoxFit.contain,
+        ),
+         const SizedBox(height: 30),
 
                   const Text(
-                    'Accédez à Votre Espace Santé personnalisé \n en Toute Sécurité.',
+                    'Bienvenue sur une application\n  conçue pour simplifier votre suivi santé',
                     style: TextStyle(
-                      color: Color.fromARGB(255, 23, 71, 90),
-                      fontSize: 20,
+                      color: Color.fromARGB(255, 17, 163, 83),
+                      fontSize: 18,
                       fontFamily: 'circularstd',
                       fontWeight: FontWeight.w500,
                     ),
@@ -70,7 +81,7 @@ class AccueilPage extends StatelessWidget {
                     ],
                   ),
 
-                  const SizedBox(height: 150),
+                  const SizedBox(height: 200),
                 ],
               ),
             ),
@@ -104,7 +115,7 @@ class PrimaryButton extends StatelessWidget {
         style: const TextStyle(fontSize: 16),
       ),
       style: ElevatedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 23, 71, 90),
+        backgroundColor: Color.fromARGB(255, 17, 163, 83),
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(
@@ -139,7 +150,7 @@ class OutlinedButtonStyled extends StatelessWidget {
         style: const TextStyle(fontSize: 16),
       ),
       style: OutlinedButton.styleFrom(
-        backgroundColor: const Color.fromARGB(255, 23, 71, 90),
+        backgroundColor:  Color.fromARGB(255, 17, 163, 83),
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 16),
         shape: RoundedRectangleBorder(

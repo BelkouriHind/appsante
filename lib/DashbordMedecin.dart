@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'patients_page.dart';
+import 'MedecinHome.dart';
 import 'rendezvous_medecin.dart';
-import 'envoyer_prescription.dart';
-import 'notifications_medecin.dart';
-import 'profil_medecin.dart';
+import 'DossierPatient.dart';
+import 'MedecinSettings.dart';
 
 class DashboardMedecinPage extends StatefulWidget {
   const DashboardMedecinPage({super.key});
@@ -15,12 +14,13 @@ class DashboardMedecinPage extends StatefulWidget {
 class _DashboardMedecinPageState extends State<DashboardMedecinPage> {
   int _selectedIndex = 0;
 
+  // Pour le moment, on garde seulement HomeMedecin pour éviter les erreurs
   final List<Widget> _pages = [
-    PatientsPage(),            // 📁 Liste de patients
-    RendezVousMedecinPage(),   // 📅 Gestion des rendez-vous
-    PrescriptionPage(),        // 💊 Envoi des prescriptions
-    NotificationsMedecinPage(),// 🔔 Notifications
-    ProfilMedecinPage(),       // 👤 Profil
+    HomeMedecin(),
+    // Placeholder pages à remplacer par les vraies pages plus tard
+    RendezVousMedecinPage() ,
+     const FormMedicalSimple(), 
+    ParametreMedecinPage(),
   ];
 
   void _onItemTapped(int index) {
@@ -35,13 +35,13 @@ class _DashboardMedecinPageState extends State<DashboardMedecinPage> {
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.deepPurple,
+        selectedItemColor: const Color.fromARGB(255, 58, 201, 158),
+        unselectedItemColor: Colors.grey[600],
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.folder_shared), label: 'Patients'),
-          BottomNavigationBarItem(icon: Icon(Icons.event_available), label: 'Rendez-vous'),
-          BottomNavigationBarItem(icon: Icon(Icons.medication), label: 'Prescription'),
-          BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Notifications'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil'),
+          BottomNavigationBarItem(icon: Icon(Icons.folder_shared), label: 'Accueil'),
+          BottomNavigationBarItem(icon: Icon(Icons.event_available), label: 'Mes Rendez-vous'),
+          BottomNavigationBarItem(icon: Icon(Icons.medical_services), label: 'Dossier Patient'),
+          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Paramètres'),
         ],
       ),
     );

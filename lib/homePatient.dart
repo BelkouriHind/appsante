@@ -59,7 +59,7 @@ class _HomepatientState extends State<Homepatient> {
                       child: _profileImage == null
                           ? Icon(Icons.camera_alt,
                               size: 18, // Taille de l'icône réduite
-                              color: Color(0xFF4285F4))
+                              color: Color.fromARGB(255, 16, 186, 192))
                           : null,
                     ),
                   ),
@@ -67,7 +67,7 @@ class _HomepatientState extends State<Homepatient> {
                 SizedBox(height: 12), // Espace réduit
                 // Nom et email
                 Text(
-                  'Belkouri Hind',
+                  'Nom complet',
                   style: TextStyle(
                     fontSize: 20, // Taille du nom réduite
                     fontWeight: FontWeight.bold,
@@ -76,7 +76,7 @@ class _HomepatientState extends State<Homepatient> {
                 ),
                 SizedBox(height: 4), // Espace réduit
                 Text(
-                  'hindbekouri33@gmail.com',
+                  'Email',
                   style: TextStyle(
                     fontSize: 14, // Taille de l'email réduite
                     color: Colors.grey[600],
@@ -98,10 +98,10 @@ class _HomepatientState extends State<Homepatient> {
                 crossAxisSpacing: 8, // Espacement réduit
                 mainAxisSpacing: 8, // Espacement réduit
                 children: [
-                  _buildModernInfoCard('Âge', '25 ans', Icons.calendar_today),
-                  _buildModernInfoCard('Genre', 'Féminin', Icons.person),
-                  _buildModernInfoCard('Taille', '165 cm', Icons.straighten),
-                  _buildModernInfoCard('Poids', '60 kg', Icons.monitor_weight),
+                  _buildModernInfoCard('Âge', '', Icons.calendar_today),
+                  _buildModernInfoCard('Genre', '', Icons.person),
+                  _buildModernInfoCard('Taille', '', Icons.straighten),
+                  _buildModernInfoCard('Poids', '', Icons.monitor_weight),
                 ],
               ),
             ),
@@ -157,7 +157,7 @@ class _HomepatientState extends State<Homepatient> {
             Icon(
               icon,
               size: 22, // Taille de l'icône réduite
-              color: Color(0xFF4285F4),
+              color: Color.fromARGB(255, 16, 186, 192),
             ),
             SizedBox(height: 6), // Espace réduit
             Text(

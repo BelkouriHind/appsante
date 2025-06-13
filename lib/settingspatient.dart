@@ -51,7 +51,8 @@ class parametrePage extends StatelessWidget {
                     onTap: () {
                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const NotificationsPage()),
+                        MaterialPageRoute(builder: (context) => const  NotificationsPage()),
+                         
                       );
                       // Action pour les notifications
                     },

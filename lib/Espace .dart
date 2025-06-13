@@ -7,12 +7,14 @@ class ChoixEspacePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       backgroundColor: const Color(0xFFEAF6F6),
       body: SafeArea(
         child: Stack(
           children: [
-            // Dégradé en fond
+            // Dégradé de fond
             Container(
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
@@ -28,20 +30,34 @@ class ChoixEspacePage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const SizedBox(height: 80),
+                    // Logo
+                    Container(
+                      height: screenHeight * 0.2,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/formlogo.png'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
 
-                    
+                    // Titre
+                    const Text(
+                      'Choisissez votre espace',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Color(0xFF176B87),
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                     const SizedBox(height: 40),
 
                     // Bouton Médecin
                     CustomButton(
                       label: 'Inscription Médecin',
-                      icon: Image.asset(
-                        'assets/formlogo.png',
-                        width: 24,
-                        height: 24,
-                        color: Colors.white,
-                      ),
+                      iconPath: 'assets/formlogo.png',
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -54,12 +70,7 @@ class ChoixEspacePage extends StatelessWidget {
                     // Bouton Patient
                     CustomButton(
                       label: 'Inscription Patient',
-                      icon: Image.asset(
-                        'assets/formlogoPatient.png',
-                        width: 24,
-                        height: 24,
-                        color: Colors.white,
-                      ),
+                      iconPath: 'assets/formlogoPatient.png',
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -78,48 +89,52 @@ class ChoixEspacePage extends StatelessWidget {
   }
 }
 
-// ✅ Correction ici : icon devient un Widget au lieu de IconData
 class CustomButton extends StatelessWidget {
   final String label;
-  final Widget icon;
+  final String iconPath;
   final VoidCallback onPressed;
 
   const CustomButton({
     super.key,
     required this.label,
-    required this.icon,
+    required this.iconPath,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.teal.withOpacity(0.3),
-            blurRadius: 10,
-            offset: const Offset(0, 6),
-          ),
-        ],
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: ElevatedButton.icon(
-        icon: icon,
-        label: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          child: Text(
-            label,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-          ),
-        ),
+    return SizedBox(
+      width: double.infinity,
+      height: 55,
+      child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF176B87),
           foregroundColor: Colors.white,
+          elevation: 5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              iconPath,
+              width: 22,
+              height: 22,
+              color: Colors.white,
+            ),
+            const SizedBox(width: 12),
+            Text(
+              label,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

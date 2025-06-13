@@ -23,7 +23,7 @@ class _DashboardPatientPageState extends State<DashboardPatientPage> {
 
   final List<Map<String, dynamic>> _bottomNavBarItems = [
     {'label': 'Accueil', 'icon': Icons.home},
-    {'label': 'Dossier', 'icon': Icons.medical_services},
+    {'label': 'Dossier Médical', 'icon': Icons.medical_services},
     {'label': 'Rendez-vous', 'icon': Icons.calendar_today},
     {'label': 'Paramètres', 'icon': Icons.settings},
   ];
